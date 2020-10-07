@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geolocation22_2.html</title>
+
+</head>
+<body>
+    <fieldset>
+        <legend>Geolocation API=현재 위치 갱신하기:Netlify배포 및 github연동</legend>
+        <button onclick="start();">위치 추적 시작</button>
+        <button onclick="stop():">위치 추적 정지</button>
+        <span id="display" style="color: red; font-size: 1.5em; font-weight: bold;"></span>
+    </fieldset>
+
+    <script>
+        console.log(window.navigator.geolocation);
+        //DOM객체 얻기
+        var span = document.getElementById('display');
+        var watcher;
+        function start(){
+            if(navigator.geolocation){
+                span.innerHTML='Geolocation api가 지원하는 브라우저';
+                //포지션옵션스 객체 설정용
+                var options = {timeout:3000,maxinumAge:5000};
+                //현재 위치 정보 갱신시마다 얻기
+                watcher = geolocation.watchPosition(successCallback,errorCallback,options);
+                console.log('watcher',watcher);
+            }
+        }
+        var stop = function(){
+            //위치정보 받기 중지
+            navigator.geolocation.clearWatch(watcher);
+        };
+        
+
+        
+        
+        
+        function successCallBack(position) {
+            //위치정보를 얻었을 때 자동으로 호출되는 콜백 함수: 인자는 포지션객체
+            console.log('position의 자료형: '+position);
+            console.log(position);
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            span.innerHTML="위도: "+lat+', 경도: '+lng;
+            
+            
+        }
+        //위치정보 에러시 자동으로 호출되는 콜백함수
+        var errorCallBackage = function(error){
+            switch(error.code) {
+                case 1: span.innerHTML='허용이 거부된';break;
+                case 2: span.innerHTML='위치 확인 불가';break;
+                case 3: span.innerHTML='시간초과';break;
+                default: span.innerHTML=error.message;
+            }
+        };
+
+    </script>
+
+    
+</body>
+</html>
