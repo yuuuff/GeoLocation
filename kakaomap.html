@@ -19,6 +19,7 @@
     </fieldset>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e3d38d8a22dc3f1c7454b3acbc2e91f1"></script>
     <script>
+        /*
         //샘플코드
         var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
         var mapOption = { 
@@ -27,6 +28,33 @@
         };
         // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
         var map = new kakao.maps.Map(mapContainer, mapOption); 
+        */
+        
+        var map;
+        if(navigator.geolocation){
+            //객체 설정용
+            var options = {timeout:3000,maximumAge:5000};
+            //현재 위치 정보 딱 한 번만 얻기
+            navigator.geolocation.getCurrentPosition(successCallback);
+        }
+        //위치정보를 얻었을 때 자동으로 호출되는 콜백 함수: 인자는 포지션객체
+        function successCallback(position){
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            //div에 지도 표시하기
+            displayKaKaoMap(lat,lng);
+        }
+        //지도 표시 함수
+        function displayKaKaoMap(lat,lng){
+            var container = document.getElementById('map'); // 지도를 표시할 div 
+            var option = { 
+                center: new kakao.maps.LatLng(lat, lng), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+            // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+            map = new kakao.maps.Map(container, option); 
+        }
+
     </script>
     
 </body>
