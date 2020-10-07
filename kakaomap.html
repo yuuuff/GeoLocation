@@ -52,8 +52,21 @@
                 level: 3 // 지도의 확대 레벨
             };
             // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-            map = new kakao.maps.Map(container, option); 
+            map = new kakao.maps.Map(container, option); //지도 생성 리턴
+            //지도에 마커 표시하기
+            setMarker(lat,lng);
         }
+        //마커 표시하는 함수
+        var setMarker=function(lat,lng){
+            // 마커가 표시될 위치입니다 
+            var markerPosition  = new kakao.maps.LatLng(lat,lng); 
+            // 마커를 생성합니다
+            var marker = new kakao.maps.Marker({
+                position: markerPosition
+            });
+            // 마커가 지도 위에 표시되도록 설정합니다
+            marker.setMap(map);
+        };
 
     </script>
     
